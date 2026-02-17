@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hostel Management</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  color:white;
+}
+
+/* NAVBAR */
+nav{
+  position:fixed;
+  width:100%;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  display:flex;
+  justify-content:space-between;
+  padding:15px 50px;
+  z-index:1000;
+}
+
+nav h2{
+  color:#fff;
+}
+
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:20px;
+}
+
+nav ul li a{
+  color:white;
+  text-decoration:none;
+  font-weight:500;
+  transition:0.3s;
+}
+
+nav ul li a:hover{
+  color:#ffcc00;
+}
+
+/* SECTIONS */
+section{
+  padding:100px 10%;
+  min-height:100vh;
+}
+
+h1{
+  margin-bottom:20px;
+  font-size:40px;
+}
+
+/* HERO */
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* ROOM CARDS */
+.room-container{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.room{
+  background:white;
+  color:black;
+  padding:20px;
+  border-radius:15px;
+  transition:0.3s;
+}
+
+.room:hover{
+  transform:scale(1.05);
+}
+
+/* SEARCH BOX */
+input{
+  padding:10px;
+  width:300px;
+  border:none;
+  border-radius:8px;
+  margin-bottom:20px;
+}
+
+/* MESS & ACTIVITIES */
+.card{
+  background:white;
+  color:black;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* ABOUT IMAGES */
+.about-images{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.about-images img{
+  width:300px;
+  border-radius:15px;
+  transition:0.3s;
+}
+
+.about-images img:hover{
+  transform:scale(1.05);
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  background:black;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <h2>🏠 HostelPro</h2>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#rooms">Room Management</a></li>
+    <li><a href="#mess">Mess Management</a></li>
+    <li><a href="#activities">Activities</a></li>
+    <li><a href="#about">About Us</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="hero">
+  <div>
+    <h1>Welcome to HostelPro</h1>
+    <p>Smart & Modern Hostel Management System</p>
+  </div>
+</section>
+
+<!-- ROOM MANAGEMENT -->
+<section id="rooms">
+  <h1>Room Management</h1>
+
+  <input type="text" id="searchRoom" placeholder="Search Room Type..." onkeyup="searchRoom()">
+
+  <div class="room-container" id="roomList">
+    <div class="room">
+      <h3>Single Room</h3>
+      <p>AC | WiFi | Study Table</p>
+    </div>
+
+    <div class="room">
+      <h3>Double Sharing</h3>
+      <p>AC | Attached Bathroom</p>
+    </div>
+
+    <div class="room">
+      <h3>Triple Sharing</h3>
+      <p>Non-AC | Affordable</p>
+    </div>
+
+    <div class="room">
+      <h3>Deluxe Room</h3>
+      <p>AC | TV | Premium Facilities</p>
+    </div>
+  </div>
+</section>
+
+<!-- MESS MANAGEMENT -->
+<section id="mess">
+  <h1>Mess Management</h1>
+
+  <div class="card">
+    <h3>Weekly Menu</h3>
+    <p>Healthy breakfast, lunch & dinner with veg/non-veg options.</p>
+  </div>
+
+  <div class="card">
+    <h3>Hygiene & Quality</h3>
+    <p>Clean kitchen, RO water & balanced nutrition meals.</p>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <h1>Extra Curricular Activities</h1>
+
+  <div class="card">
+    <h3>🏏 Sports</h3>
+    <p>Cricket, Football, Badminton & Indoor Games.</p>
+  </div>
+
+  <div class="card">
+    <h3>💪 Gym</h3>
+    <p>Fully equipped modern gym with trainer support.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h1>About Us</h1>
+  <p>Our hostel provides safe, secure and comfortable living for students.</p>
+
+  <div class="about-images">
+    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5" alt="">
+    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" alt="">
+    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="">
+  </div>
+</section>
+
+<footer>
+  © 2026 HostelPro | Designed by Pandu 🚀
+</footer>
+
+<script>
+function searchRoom(){
+  let input = document.getElementById("searchRoom").value.toLowerCase();
+  let rooms = document.querySelectorAll(".room");
+
+  rooms.forEach(room=>{
+    let text = room.innerText.toLowerCase();
+    if(text.includes(input)){
+      room.style.display="block";
+    } else {
+      room.style.display="none";
+    }
+  });
+}
+</script>
+
+</body>
+</html>

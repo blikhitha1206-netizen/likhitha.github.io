@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Books Data Table</title>
+
+<style>
+  body {
+    font-family: Arial;
+    padding: 20px;
+  }
+
+  input {
+    padding: 8px;
+    margin-bottom: 15px;
+    width: 300px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background: #f0f0f0;
+    cursor: pointer;
+  }
+
+  img {
+    width: 50px;
+  }
+
+  button {
+    padding: 6px 10px;
+    margin: 5px;
+  }
+</style>
+</head>
+
+<body>
+
+<h2>Books Data Table</h2>
+
+<input type="text" id="searchInput" placeholder="Search books...">
+
+<table>
+  <thead id="tableHead"></thead>
+  <tbody id="tableBody"></tbody>
+</table>
+
+<div>
+  <button onclick="previousPage()">Previous</button>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+let books = [];
+let filteredBooks = [];
+let currentPage = 1;
+let rowsPerPage = 10;
+let currentSortColumn = "";
+let currentSortOrder = "asc";
+
+
+fetch("books.json")
+  .then(response => response.json())
+  .then(data => {
+    books = data;
+    filteredBooks = [...books];
+
+    createTableHeader();
+    sortTable("title");  
+  });
+
+
+
+function createTableHeader() {
+
+  let headerRow = "<tr>";
+
+  let columns = Object.keys(books[0]);
+
+  columns.forEach(column => {
+    headerRow += `
+      <th onclick="sortTable('${column}')">
+        ${column}
+        <span id="arrow-${column}"></span>
+      </th>
+    `;
+  });
+
+  headerRow += "</tr>";
+
+  document.getElementById("tableHead").innerHTML = headerRow;
+}
+
+
+
+function displayTable() {
+
+  let startIndex = (currentPage - 1) * rowsPerPage;
+  let endIndex = startIndex + rowsPerPage;
+
+  let pageData = filteredBooks.slice(startIndex, endIndex);
+
+  let rows = "";
+
+  pageData.forEach(book => {
+
+    rows += "<tr>";
+
+    Object.entries(book).forEach(([key, value]) => {
+
+      if (typeof value === "object") {
+
+        if (value.$date) {
+          rows += `<td>${value.$date.split("T")[0]}</td>`;
+        }
+
+        else if (Array.isArray(value)) {
+          rows += `<td>${value.join(", ")}</td>`;
+        }
+
+        else {
+          rows += `<td>${JSON.stringify(value)}</td>`;
+        }
+      }
+
+      else if (value.toString().includes("http")) {
+        rows += `<td><img src="${value}"></td>`;
+      }
+
+      else {
+        rows += `<td>${value}</td>`;
+      }
+
+    });
+
+    rows += "</tr>";
+  });
+
+  document.getElementById("tableBody").innerHTML = rows;
+}
+
+
+
+function sortTable(column) {
+
+  if (currentSortColumn === column) {
+    currentSortOrder = currentSortOrder === "asc" ? "desc" : "asc";
+  } else {
+    currentSortColumn = column;
+    currentSortOrder = "asc";
+  }
+
+  filteredBooks.sort((a, b) => {
+
+    let valueA = a[column];
+    let valueB = b[column];
+
+    valueA = JSON.stringify(valueA);
+    valueB = JSON.stringify(valueB);
+
+    if (valueA < valueB) return currentSortOrder === "asc" ? -1 : 1;
+    if (valueA > valueB) return currentSortOrder === "asc" ? 1 : -1;
+
+    return 0;
+  });
+
+  
+
+  document.querySelectorAll("th span").forEach(span => span.innerHTML = "");
+
+  document.getElementById("arrow-" + column).innerHTML =
+    currentSortOrder === "asc" ? "▲" : "▼";
+
+  currentPage = 1;
+  displayTable();
+}
+
+
+
+document.getElementById("searchInput").addEventListener("input", function() {
+
+  let searchText = this.value.toLowerCase();
+
+  filteredBooks = books.filter(book =>
+    Object.values(book).some(value =>
+      JSON.stringify(value).toLowerCase().includes(searchText)
+    )
+  );
+
+  currentPage = 1;
+  displayTable();
+});
+
+
+function nextPage() {
+  if (currentPage * rowsPerPage < filteredBooks.length) {
+    currentPage++;
+    displayTable();
+  }
+}
+
+function previousPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    displayTable();
+  }
+}
+
+</script>
+
+</body>
+</html>
