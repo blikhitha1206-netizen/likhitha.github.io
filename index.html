@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boggala Likhitha - Portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            overflow-x: hidden;
+        }
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.1;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        header { 
+            background: rgba(26,26,64,0.95); 
+            backdrop-filter: blur(10px);
+            color: white; 
+            padding: 1rem 0; 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+        nav ul { list-style: none; display: flex; justify-content: center; }
+        nav li { margin: 0 1.5rem; }
+        nav a { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav a:hover { color: #23d5ab; transform: translateY(-2px); }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: #23d5ab; transition: width 0.3s ease;
+        }
+        nav a:hover::after { width: 100%; }
+        #hero { 
+            background: linear-gradient(135deg, rgba(26,26,64,0.95), rgba(35,213,171,0.8)), 
+                        radial-gradient(circle at 20% 80%, rgba(231,60,126,0.3), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(238,119,82,0.3), transparent 50%);
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            color: white; 
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        #hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1.5" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        #hero img { 
+            width: 220px; 
+            height: 220px; 
+            border-radius: 50%; 
+            margin-bottom: 1.5rem; 
+            border: 5px solid rgba(255,255,255,0.9);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+        #hero img:hover { transform: scale(1.05); }
+        @skeyframes pulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 20px 50px rgba(35,213,171,0.5); }
+        }
+        #hero h1 { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            background: linear-gradient(45deg, #fff, #23d5ab); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            animation: slideInUp 1s ease;
+        }
+        #hero p { font-size: 1.3rem; max-width: 600px; animation: slideInUp 1s ease 0.3s both; }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        section { 
+            padding: 5rem 2rem; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            position: relative;
+        }
+        h2 { 
+            font-size: 2.5rem; 
+            text-align: center; 
+            margin-bottom: 3rem; 
+            background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            position: relative;
+        }
+        h2::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(45deg, #ee7752, #23d5ab); border-radius: 2px;
+        }
+        #about { 
+            background: rgba(244,244,244,0.8); 
+            border-radius: 20px; 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            margin: 2rem;
+        }
+        #about p { font-size: 1.2rem; text-align: center; max-width: 800px; margin: 0 auto; }
+        .skills, .projects { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem; 
+        }
+        .skills div, .project { 
+            background: rgba(255,255,255,0.95); 
+            padding: 2rem; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); 
+            text-align: center; 
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .skills div::before, .project::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(35,213,171,0.2), transparent); transition: left 0.5s;
+        }
+        .skills div:hover::before, .project:hover::before { left: 100%; }
+        .skills div:hover, .project:hover { 
+            transform: translateY(-10px) scale(1.02); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2); 
+        }
+        .skills div { 
+            font-weight: bold; 
+            font-size: 1.3rem; 
+            background: linear-gradient(45deg, #ee7752, #e73c7e); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .project h3 { color: #1a1a40; margin-bottom: 1rem; }
+        #contact { background: rgba(26,26,64,0.1); border-radius: 20px; margin: 2rem; }
+        #contact form { max-width: 600px; margin: 0 auto; }
+        input, textarea { 
+            width: 100%; 
+            padding: 1rem; 
+            margin: 1rem 0; 
+            border: 2px solid rgba(35,213,171,0.3); 
+            border-radius: 12px; 
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+        input:focus, textarea:focus { 
+            outline: none; 
+            border-color: #23d5ab; 
+            box-shadow: 0 0 20px rgba(35,213,171,0.3); 
+            transform: scale(1.02);
+        }
+        button { 
+            background: linear-gradient(45deg, #ee7752, #e73c7e); 
+            color: white; 
+            padding: 1rem 2rem; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: block; margin: 2rem auto 0;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(238,119,82,0.4); }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <img src="./likhi.jpeg" alt="Boggala Likhitha">
+        <h1>Boggala Likhitha</h1>
+        <p>Web Developer from Tirupati | Building Working Websites, Games and more</p>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Tech student passionate about web development, databases, and competitive exams.I love gaming and coding! Video games excite me with their cool worlds and challenges, and I want to make software just as fun and useful. From building websites and apps to creating voice assistants, I mix gaming's energy with real-world solutions using HTML, PHP, and more. It's awesome turning ideas into working programs that feel alive and exciting!</p>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+            <div>HTML/CSS</div>
+            <div>C</div>
+            <div>PHP</div>
+            <div>Java Script</div>
+            <div>Web Design</div>
+            <div>Java</div>
+            <div>Python</div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects">
+            <div class="project">
+                <h3>Hostel Management System</h3>
+                <p>Web app for room allocation and fees using PHP & Oracle DB.</p>
+            </div>
+            <div class="project">
+                <h3>Voice Based Virtual Assistant</h3>
+                <p>An Application that makes PC run with voice commands.</p>
+            </div>
+            <div class="project">
+                <h3>Portfolio Site</h3>
+                <p>Personal site with responsive design and animations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+       <form action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="e25b5a68-5421-4345-9a59-47bbc99ea402">
+  <input type="text" placeholder="Your Name" name="name" required>
+  <input type="email" placeholder="Your Mail"name="email" required>
+  <textarea name="message" placeholder="Your Message"required></textarea>
+  <button type="submit">Submit</button>
+</form>
+    </section>
+    <section>
+        <table style="width:100%; border-collapse: collapse; margin-top: 2rem;">
+            <caption style="caption-side: top; font-size: 1.5rem; margin-bottom: 1rem;">My Works</caption>
+            <tr>
+                <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">TITLE</th>
+                <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">LIVE LINK</th>
+                <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">SOURCE CODE LINK</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Hostel management</td>
+                <td style="border: 1px solid #ccc; padding: 8px;" text-align: left;"><a href="hostel management.html" target="_blank" style="color: #23d5ab; text-decoration: none;">View Live</a></td>
+                <td style="border: 1px solid #ccc; padding: 8px;" text-align: left;"><a href="https://github.com/blikhitha1206-netizen/likhitha.github.io/blob/main/hostel%20management.html" target="_blank" style="color: #23d5ab; text-decoration: none;">View Source</a></td>
+                </tr>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Portfolio</td>
+                <td style="border: 1px solid #ccc; padding: 8px;" text-align: left;"><a href="index.html" target="_blank" style="color: #23d5ab; text-decoration: none;">View Live</a></td>
+                <td style="border: 1px solid #ccc; padding: 8px;" text-align: left;"><a href="https://github.com/blikhitha1206-netizen/likhitha.github.io/blob/main/index.html" target="_blank" style="color: #23d5ab; text-decoration: none;">View Source</a></td>     
+
+                </tr>   
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">TABLES with searching and sorting</td>
+                <td style="border: 1px solid #ccc; padding: 8px;" text-align: left;"><a href="books2js.html" target="_blank" style="color: #23d5ab; text-decoration: none;">View Live</a></td>
+                <td style="border: 1px solid #ccc; padding: 8px     ;" text-align: left;"><a href="https://github.com/blikhitha1206-netizen/likhitha.github.io/blob/main/books2js.html " target="_blank" style="color: #23d5ab; text-decoration: none;">View Source</a></td>
+                </tr>
+        </table>
+
+    
+    </section>
+</body>
+</html>
